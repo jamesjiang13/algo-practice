@@ -21,9 +21,27 @@
 // stepper([3, 4, 1, 0, 10]);           // => true, because we can step through elements 3 -> 4 -> 10
 // stepper([2, 3, 1, 1, 0, 4, 7, 8])    // => false, there is no way to step to the end
 function stepper(nums) {
+    let table = new Array(nums.length).fill(false);
+    table[0] = true;
 
+    for (let i = 0; i < nums.length; i++ ) {
+        let steps = nums[i];
+        // console.log(steps);
+        for (let j = 1; j <= steps; j++) {
+            if (table[i]) {
+                if (nums[i + j]) {
+                    table[i + j] = true;
+                    // console.log(table)
+                }
+            }
+        }
+        // console.log('--')
+    }
+    return table[table.length - 1];
 }
 
+// stepper([3, 4, 1, 0, 10])
+// stepper([2, 3, 1, 1, 0, 4, 7, 8])
 
 // Write a function, maxNonAdjacentSum(nums), that takes in an array of nonnegative numbers.
 // The function should return the maximum sum of elements in the array we can get if we cannot take
