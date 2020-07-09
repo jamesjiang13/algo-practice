@@ -20,28 +20,45 @@
 // stepper([3, 1, 0, 5, 10]);           // => true, because we can step through elements 3 -> 5 -> 10
 // stepper([3, 4, 1, 0, 10]);           // => true, because we can step through elements 3 -> 4 -> 10
 // stepper([2, 3, 1, 1, 0, 4, 7, 8])    // => false, there is no way to step to the end
-function stepper(nums) {
-    let table = new Array(nums.length).fill(false);
-    table[0] = true;
+// function stepper(nums) {
+//     let table = new Array(nums.length).fill(false);
+//     table[0] = true;
 
-    for (let i = 0; i < nums.length; i++ ) {
-        let steps = nums[i];
-        // console.log(steps);
-        for (let j = 1; j <= steps; j++) {
-            if (table[i]) {
-                if (nums[i + j]) {
-                    table[i + j] = true;
-                    // console.log(table)
-                }
-            }
-        }
-        // console.log('--')
-    }
-    return table[table.length - 1];
+//     for (let i = 0; i < nums.length; i++ ) {
+//         let steps = nums[i];
+//         console.log(steps);
+//         for (let j = 1; j <= steps; j++) {
+//             if (table[i] && nums[i + j]) {
+//                 table[i + j] = true;
+//                 console.log(table)
+//             }
+//         }
+//         console.log('--')
+//     }
+//     return table[table.length - 1];
+// }
+
+// stepper([2, 3, 1, 1, 0, 4, 7, 8])
+
+// using memoization
+function stepper(nums, memo = {}) {
+	let key = nums.length; // we use length because as you slice the previous nums, the array gets shorter and it is distinct
+	if (key in memo) return memo[key];
+
+	if (nums.length <= 1) return true;
+
+	let maxStep = nums[0];
+	for (i = 1; i <= maxStep; i++ ) {
+		if (stepper(nums.slice(i), memo)) {
+			memo[key] = true;
+			return true 
+		}
+	}
+	memo[key] = true;
+	return false
 }
 
-// stepper([3, 4, 1, 0, 10])
-// stepper([2, 3, 1, 1, 0, 4, 7, 8])
+stepper([3, 4, 1, 0, 10])
 
 // Write a function, maxNonAdjacentSum(nums), that takes in an array of nonnegative numbers.
 // The function should return the maximum sum of elements in the array we can get if we cannot take
