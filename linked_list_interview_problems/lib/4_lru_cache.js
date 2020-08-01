@@ -58,33 +58,41 @@
 // TODO: Implement the LRUCacheItem class here
 class LRUCacheItem {
   constructor(val = null, key = null) {
-
+    this.val = val;
+    this.key = key;
   }
 }
 
 // TODO: Implement the LRUCacheItem class here
 class LRUCache {
   constructor(limit) {
-
+    this.cache = new Array(limit);
+    this.limit = limit;
+    this.length = 0;
   }
 
   // TODO: Implement the size method here
   size() {
-
+    return this.length;
   }
 
   // TODO: Implement the get method here
   get(key) {
-
+    
   }
 
   // TODO: Implement the set method here
   set(key, val) {
+    
+    this.cache.pop();
 
+    let MRU = new LRUCacheItem(val, key)
+    this.cache.unshift(MRU);
+    return 
   }
 
   isFull() {
-    
+    return this.length >= this.limit;
   }
 
   prune() {
@@ -92,7 +100,7 @@ class LRUCache {
   }
 
   promote(item) {
-
+    
   }
 }
 
